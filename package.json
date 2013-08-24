@@ -6,6 +6,11 @@
     },
     "private": true,
     "version": "0.0.0",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/artsince/delete-gists-cli.git"
+    },
     "dependencies": {
         "async": ">= 0.2.9"
     }
