@@ -4,7 +4,11 @@
  * There will be a global config file, and an additional config file 
  * for each environment setting
  */
- var env = process.env.NODE_ENV || 'development',
-     cfg = require('./config.' + env);
+
+/*jslint node: true */
+'use strict';
+
+var env = process.env.NODE_ENV || 'development',
+    cfg = require('./config.' + env);
 
 module.exports = cfg;
