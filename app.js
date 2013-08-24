@@ -25,19 +25,8 @@
     };
 
     var test = function (input) {
-        return /^(yes|no)\n/.test(input);
+        return (/^(yes|no|quit)\n/).test(input);
     };
-
-    // confirm('can I delete this?', test, 'sorry, didn\'t catch that (yes or no)', function (res) {
-    //     if(res === 'yes') {
-    //         console.log('positive');
-    //     }
-    //     else {
-    //         console.log('negative');
-    //     }
-
-    //     process.exit();
-    // });
 
     // first read all gists
     // foreach gist id prompt if user wants to delete gist
@@ -78,26 +67,34 @@
     };
 
     var iterateOverGists = function (jsonGists)  {
-        console.log(jsonGists.length);
+        console.log('Found ' + jsonGists.length + ' gists.');
 
         async.eachSeries(jsonGists, function (gist, done) {
 
-            confirm('delete the following gist ? (' + gist.description + ')', test, 'sorry, didn\'t catch that (yes or no)', function (res) {
+            confirm('delete the following gist ? (' + gist.description + ')', test, 'sorry, didn\'t catch that (yes, no, quit)', function (res) {
                 if(res === 'yes') {
                     console.log('OK, I will delete this');
                     deleteGist(gist.id, function (err) {
                         done(err);
                     });
                 }
-                else {
+                else if(res === 'no'){
                     console.log('Alright, I will keep this');
                     done();
+                } else {
+                    console.log('Stopping now');
+                    done({msg: 'Early Termination'});
                 }
             });
         }, function (err) {
             if(err) {
-                console.log(err);
-                throw err;
+                if(err.msg !== null && err.msg === 'Early Termination') {
+                    console.log('exiting');
+                }
+                else {
+                    console.log(err);
+                    throw err;
+                }
             }
 
             console.log('finished');
