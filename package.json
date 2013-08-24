@@ -1,0 +1,12 @@
+{
+    "name": "delete-gists-cli",
+    "author": {
+        "name": "Ahmet Kizilay",
+        "url": "https://github.com/artsince"
+    },
+    "private": true,
+    "version": "0.0.0",
+    "dependencies": {
+        "async": ">= 0.2.9"
+    }
+}
